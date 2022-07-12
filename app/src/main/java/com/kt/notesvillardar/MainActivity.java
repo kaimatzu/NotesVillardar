@@ -11,8 +11,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import androidx.fragment.app.DialogFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EditNoteDialogFragment.EditNoteDialogListener{
     ArrayList<Note> notes;
     NotesAdapter notes_adapter;
 
@@ -65,9 +66,19 @@ public class MainActivity extends AppCompatActivity {
         notes.add(new Note("First Note"));
         notes.add(new Note("Second Note"));
 
-        notes_adapter = new NotesAdapter(getBaseContext(), R.layout.note_layout, notes);
+        notes_adapter = new NotesAdapter(getBaseContext(), R.layout.note_layout, notes, getSupportFragmentManager());
         lvList.setAdapter(notes_adapter);
 
         notes.add(new Note("Karl John Villardar"));
+    }
+
+    @Override
+    public void onEditListenerMethod(DialogFragment dialog) {
+        notes_adapter.onEditListenerMethod(dialog);
+    }
+
+    @Override
+    public void onCancelListenerMethod(DialogFragment dialog) {
+        notes_adapter.onCancelListenerMethod(dialog);
     }
 }
