@@ -63,8 +63,11 @@ public class NotesAdapter extends ArrayAdapter<Note>{
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notes.remove(note);
-                notifyDataSetChanged();
+                DeleteNoteDialogFragment dialog = new DeleteNoteDialogFragment(act_note, notes, note);
+                dialog.show(fm, "DeleteDialog");
+                current = note;
+                //notes.remove(note);
+                //notifyDataSetChanged();
             }
         });
 
@@ -72,7 +75,7 @@ public class NotesAdapter extends ArrayAdapter<Note>{
             @Override
             public void onClick(View view) {
                 EditNoteDialogFragment dialog = new EditNoteDialogFragment(act_note);
-                dialog.show(fm, "Karl");
+                dialog.show(fm, "EditDialog");
                 current = note;
             }
         });
@@ -80,6 +83,10 @@ public class NotesAdapter extends ArrayAdapter<Note>{
         return noteView;
     }
 
+    public void onDeleteListenerMethod(DialogFragment dialog){
+        notes.remove(current);
+        notifyDataSetChanged();
+    }
     public void onEditListenerMethod(DialogFragment dialog) {
         EditText etEdit = dialog.getDialog().findViewById(R.id.etEdit);
         String new_note = etEdit.getText().toString();

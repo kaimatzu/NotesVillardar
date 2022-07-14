@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import androidx.fragment.app.DialogFragment;
 
-public class MainActivity extends AppCompatActivity implements EditNoteDialogFragment.EditNoteDialogListener{
+public class MainActivity extends AppCompatActivity implements EditNoteDialogFragment.EditNoteDialogListener, DeleteNoteDialogFragment.DeleteNoteDialogListener{
     ArrayList<Note> notes;
     NotesAdapter notes_adapter;
 
@@ -80,5 +80,10 @@ public class MainActivity extends AppCompatActivity implements EditNoteDialogFra
     @Override
     public void onCancelListenerMethod(DialogFragment dialog) {
         notes_adapter.onCancelListenerMethod(dialog);
+    }
+
+    @Override
+    public void onDeleteListenerMethod(DialogFragment dialog) {
+        notes_adapter.onDeleteListenerMethod(dialog);
     }
 }
