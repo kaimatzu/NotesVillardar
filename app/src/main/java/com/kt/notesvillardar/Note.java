@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Note {
     String note;
-    Date created;
+    Date created, modified;
     boolean important;
 
     public Note(String note) {
@@ -28,6 +28,10 @@ public class Note {
     public void setCreated(Date created) {
         this.created = created;
     }
+
+    public void setModified() { this.modified = new Date(System.currentTimeMillis()); }
+
+    public Date getModified() { return modified; }
 
     @Override
     public String toString() {

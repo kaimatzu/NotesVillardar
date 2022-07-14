@@ -1,6 +1,7 @@
 package com.kt.notesvillardar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,8 +47,16 @@ public class NotesAdapter extends ArrayAdapter<Note>{
         Note note = getItem(position);
         String act_note = note.getNote();
         Date act_created = note.getCreated();
+        Date act_modified = note.getCreated();
+        if(note.getModified() != null)
+            act_modified = note.getModified();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        String timeString = sdf.format(act_created);
+        String timeString;
+
+        if(act_modified == act_created)
+            timeString = sdf.format(act_created);
+        else
+            timeString = sdf.format(act_modified);
 
         if (convertView == null) {
             noteView = new LinearLayout(getContext());
@@ -89,6 +100,12 @@ public class NotesAdapter extends ArrayAdapter<Note>{
                 EditNoteDialogFragment dialog = new EditNoteDialogFragment(act_note);
                 dialog.show(fm, "EditDialog");
                 current = note;
+                note.setModified();
+                Date act_modified = note.getModified();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                String timeString = sdf.format(act_modified);
+                tvTime.setText(timeString);
+                tvTime.setTextColor(Color.BLUE);
             }
         });
 
@@ -104,6 +121,7 @@ public class NotesAdapter extends ArrayAdapter<Note>{
         notes.remove(current);
         notifyDataSetChanged();
     }
+
     public void onEditListenerMethod(DialogFragment dialog) {
         EditText etEdit = dialog.getDialog().findViewById(R.id.etEdit);
         String new_note = etEdit.getText().toString();
@@ -115,4 +133,14 @@ public class NotesAdapter extends ArrayAdapter<Note>{
     public void onCancelListenerMethod(DialogFragment dialog) {
         current = null;
     }
+
+//    public void setTimeModified(){
+//        current.setModified();
+//        Log.d("Current", String.valueOf(current.getModified()));
+//        Date act_modified = current.getModified();
+//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+//        String timeString = sdf.format(act_modified);
+//        Log.d("Current", timeString);
+//    }
+
 }

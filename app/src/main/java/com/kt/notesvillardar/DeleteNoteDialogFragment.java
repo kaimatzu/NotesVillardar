@@ -48,7 +48,8 @@ public class DeleteNoteDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         listener.onDeleteListenerMethod(DeleteNoteDialogFragment.this);
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 listener.onCancelListenerMethod(DeleteNoteDialogFragment.this);
