@@ -1,10 +1,13 @@
 package com.kt.notesvillardar;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
@@ -58,6 +61,15 @@ public class NotesAdapter extends ArrayAdapter<Note>{
         tvNote.setText(act_note);
         tvTime.setText(timeString);
 
+        CheckBox cbImportant = noteView.findViewById(R.id.cbImportant);
+        cbImportant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                current = note;
+                setImportant(isChecked);
+            }
+        });
+
         ImageButton btnDelete = noteView.findViewById(R.id.btnDelete);
         btnDelete.setImageResource(android.R.drawable.ic_delete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +93,11 @@ public class NotesAdapter extends ArrayAdapter<Note>{
         });
 
         return noteView;
+    }
+
+    public void setImportant(boolean important){
+        current.important = important;
+        Log.d("Important " + current.note, String.valueOf(current.important));
     }
 
     public void onDeleteListenerMethod(DialogFragment dialog){

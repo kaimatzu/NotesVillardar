@@ -6,6 +6,7 @@ import java.util.Date;
 public class Note {
     String note;
     Date created;
+    boolean important;
 
     public Note(String note) {
         this.note = note;
